@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
   btnContainer: {
     alignContent: 'center',
     flex: 0.5,
+    gap: 10,
   },
   btnText: {
     marginBottom: 10,

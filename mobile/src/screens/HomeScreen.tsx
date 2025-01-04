@@ -11,12 +11,8 @@ interface Product {
   price: number;
 }
 
-interface Props {
-  navigation: any;
-}
-
-const HomeScreen: React.FC<Props> = ({ navigation }) => {
-  const { isLoggedIn } = useAuthStore();
+const HomeScreen: React.FC = () => {
+  const {isLoggedIn} = useAuthStore();
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
   useEffect(() => {
@@ -43,17 +39,11 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       {error && <Text style={styles.error}>{error}</Text>}
       {isLoggedIn ? (
         <>
-          <Button
-            mode="contained"
-            onPress={() => navigation.navigate('Profile')}
-          >
-            Go to Profile
-          </Button>
           {products && products.length > 0 ? (
             <FlatList
               data={products}
-              keyExtractor={(item) => String(item.id)}
-              renderItem={({ item }) => (
+              keyExtractor={item => String(item.id)}
+              renderItem={({item}) => (
                 <View style={styles.productItem}>
                   <Text style={styles.productName}>{item.name}</Text>
                   <Text>{item.description}</Text>
