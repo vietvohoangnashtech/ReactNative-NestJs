@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import { useAuthStore } from '../store/authStore';
 import axiosInstance from '../utils/axios';
-import { Button, Text } from 'react-native-paper';
+import {ActivityIndicator, Text} from 'react-native-paper';
 
 interface Product {
   id: number;
@@ -15,9 +15,12 @@ const HomeScreen: React.FC = () => {
   const {isLoggedIn} = useAuthStore();
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+
   useEffect(() => {
     if (isLoggedIn) {
       const fetchProducts = async () => {
+        setLoading(true);
         try {
           const response = await axiosInstance.get('/products');
           setProducts(response.data);
@@ -27,11 +30,21 @@ const HomeScreen: React.FC = () => {
           } else {
             setError('Fetch product failed');
           }
+        } finally {
+          setLoading(false);
         }
       };
       fetchProducts();
     }
   }, [isLoggedIn]);
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -92,6 +105,11 @@ const styles = StyleSheet.create({
   error: {
     color: 'red',
     marginBottom: 10,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
