@@ -32,9 +32,11 @@ const ProfileEdit: React.FC<Props> = ({profile, onSubmit}) => {
         value={email}
         onChangeText={setEmail}
       />
-      <Button mode="contained" onPress={handleSubmit}>
-        Save
-      </Button>
+      <View style={styles.btnContainer}>
+        <Button mode="contained" onPress={handleSubmit}>
+          Save
+        </Button>
+      </View>
     </View>
   );
 };
@@ -49,6 +51,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 10,
     padding: 10,
+  },
+  btnContainer: {
+    alignContent: 'center',
+    flex: 0.5,
   },
 });
 

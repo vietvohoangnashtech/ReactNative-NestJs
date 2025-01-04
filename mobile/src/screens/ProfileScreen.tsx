@@ -11,7 +11,7 @@ const ProfileScreen = () => {
   const [profile, setProfile] = useState<any>(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { logout } = useAuthStore();
+  const {logout} = useAuthStore();
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -65,7 +65,7 @@ const ProfileScreen = () => {
                 Cancel Edit
               </Button>
             )}
-            <Button mode="contained" onPress={logout}>
+            <Button mode="contained" onPress={logout} style={styles.btnText}>
               Logout
             </Button>
           </View>
@@ -88,7 +88,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   btnContainer: {
-    marginTop: 10,
+    alignContent: 'center',
+    flex: 0.5,
+  },
+  btnText: {
+    marginBottom: 10,
   },
   error: {
     color: 'red',

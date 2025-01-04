@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import LoginForm from '../components/LoginForm';
 import {useAuthStore} from '../store/authStore';
 import axiosInstance from '../utils/axios';
+import {Text} from 'react-native-paper';
 
 const LoginScreen = () => {
   const [error, setError] = useState<string | null>(null);

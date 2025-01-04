@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "React Native for mobile, NestJs for server api",
   "scripts": {
-    "server": "cd server && npm run start:dev",
-    "mobile": "cd mobile && npm start",
+    "server": "npm run start:dev --prefix server",
+    "mobile": "npm run android --prefix mobile",
     "dev": "concurrently \"npm run server\" \"npm run mobile\""
   },
   "author": "Viet Vo Hoang",

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Text as PaperText } from 'react-native-paper';
+import {Text} from 'react-native-paper';
 
 interface Props {
   profile: {
@@ -10,16 +10,14 @@ interface Props {
   };
 }
 
-const Profile: React.FC<Props> = ({ profile }) => {
+const Profile: React.FC<Props> = ({profile}) => {
   return (
     <View style={styles.container}>
-      <PaperText style={styles.text}>Username: {profile.username}</PaperText>
+      <Text style={styles.text}>Username: {profile.username}</Text>
       {profile.fullName && (
-        <PaperText style={styles.text}>Full Name: {profile.fullName}</PaperText>
+        <Text style={styles.text}>Full Name: {profile.fullName}</Text>
       )}
-      {profile.email && (
-        <PaperText style={styles.text}>Email: {profile.email}</PaperText>
-      )}
+      {profile.email && <Text style={styles.text}>Email: {profile.email}</Text>}
     </View>
   );
 };
