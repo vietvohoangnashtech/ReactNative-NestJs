@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import {jwtDecode} from 'jwt-decode';
 
 interface AuthState {
   isLoggedIn: boolean;
@@ -12,14 +13,14 @@ interface AuthState {
 }
 
 export const useAuthStore = create(
-  immer<AuthState>((set) => ({
+  immer<AuthState>(set => ({
     isLoggedIn: false,
     token: null,
     loading: true,
-    login: async (token) => {
+    login: async token => {
       try {
         await EncryptedStorage.setItem('auth_token', token);
-        set((state) => {
+        set(state => {
           state.token = token;
           state.isLoggedIn = true;
         });
@@ -30,7 +31,7 @@ export const useAuthStore = create(
     logout: async () => {
       try {
         await EncryptedStorage.removeItem('auth_token');
-        set((state) => {
+        set(state => {
           state.token = null;
           state.isLoggedIn = false;
         });
@@ -41,19 +42,29 @@ export const useAuthStore = create(
     loadToken: async () => {
       try {
         const storedToken = await EncryptedStorage.getItem('auth_token');
-        set((state) => {
-          if (storedToken) {
-            state.token = storedToken;
-            state.isLoggedIn = true;
+        if (storedToken) {
+          // check if token is expired
+          const decodeToken = jwtDecode(storedToken);
+          const isExpired = decodeToken.exp
+            ? Date.now() >= decodeToken.exp * 1000
+            : true;
+          if (isExpired) {
+            await EncryptedStorage.removeItem('auth_token');
+          } else {
+            set(state => {
+              state.token = storedToken;
+              state.isLoggedIn = true;
+            });
           }
-        });
+        }
       } catch (error) {
         console.log('error load token', error);
+        await EncryptedStorage.removeItem('auth_token');
       } finally {
-        set((state) => {
+        set(state => {
           state.loading = false;
         });
       }
     },
-  }))
+  })),
 );

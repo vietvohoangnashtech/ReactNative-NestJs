@@ -1,5 +1,8 @@
 # Use an official Node.js runtime as a base image
-FROM node:18-alpine
+FROM node:22.11.0-alpine
+
+# Install essential tools for React Native and Android development
+RUN apk add --no-cache bash openjdk17 git
 
 # Set the working directory in the container
 WORKDIR /app
@@ -7,14 +10,17 @@ WORKDIR /app
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
-# Install application dependencies
+# Install application dependencies using npm
 RUN npm install
 
 # Copy the rest of the application code to the working directory
 COPY . .
 
-# Expose the port the app runs on
+# Ensure Metro bundler is accessible
+ENV PATH=$PATH:/app/node_modules/.bin
+
+# Expose the Metro bundler's default port
 EXPOSE 8081
 
-# Define the command to start the application
+# Start the Metro bundler
 CMD ["npm", "start"]
