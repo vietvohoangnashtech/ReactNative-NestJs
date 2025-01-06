@@ -24,39 +24,41 @@ This repository contains a demo full-stack application built with a NestJS API b
 ## How to Use
 
 1.  **Clone the repository:**
-    ```bash
+    ```
     git clone <repository-url>
     cd <repository-directory>
     ```
 
 2.  **Install dependencies:**
-    ```bash
+    ```
     npm install
     ```
 
 3.  **Start the applications:**
 
     *   Run the following command from the project root:
-        ```bash
+        ```
         npm run dev
         ```
         * This single command will start the API server with hot reload and also start your react native mobile metro bundler
 
 4.  **API Development (Backend only)**
-        * You can start the api server only using command:
-             ```bash
+
+      * You can start the api server only using command:
+             ```
              npm run server
              ```
 
 5.  **Mobile App Development (Frontend only)**
+
      *  You can start the react native using command:
-             ```bash
+             ```
              npm run mobile
              ```
         *   This will start the metro bundler server for your react native app.
 
 6.  **Access the applications:**
-    *   **API:** The API is accessible through `http://10.0.2.2:3000` (or `localhost:3000` if your api is using that).
+    *   **API:** The API is accessible through `http://10.0.2.2:3000` (for android avd or `localhost:3000` for web).
     *  **Mobile app**:
           * Connect using a simulator or real device.
           *  For web app, use your browser to access that by using address specified in your terminal.
